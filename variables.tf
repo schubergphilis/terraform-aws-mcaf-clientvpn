@@ -21,6 +21,11 @@ variable "okta_label" {
   description = "The label of the Okta App"
 }
 
+variable "routes" {
+  type        = list(string)
+  description = "The list of CIDR ranges to add as routes"
+}
+
 variable "split_tunnel" {
   type        = bool
   default     = true

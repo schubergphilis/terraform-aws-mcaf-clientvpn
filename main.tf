@@ -57,3 +57,11 @@ resource "aws_ec2_client_vpn_authorization_rule" "default" {
   description            = "Authorization rule for the Client VPN"
   target_network_cidr    = "0.0.0.0/0"
 }
+
+resource "aws_ec2_client_vpn_route" "default" {
+  for_each = toset(var.routes)
+
+  client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
+  destination_cidr_block = each.key
+  target_vpc_subnet_id   = aws_ec2_client_vpn_network_association.default[0].subnet_id
+}
