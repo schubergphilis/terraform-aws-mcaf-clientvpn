@@ -23,6 +23,7 @@ variable "okta_label" {
 
 variable "routes" {
   type        = list(string)
+  default     = []
   description = "The list of destination CIDR ranges to add as routes"
 }
 
