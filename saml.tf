@@ -4,9 +4,12 @@ resource "aws_iam_saml_provider" "default" {
 }
 
 resource "okta_app_saml" "default" {
+  app_settings_json = "{\"port\": 35001}"
+  hide_ios          = true
+  hide_web          = true
   label             = var.okta_label
   preconfigured_app = "aws_clientvpn"
-  app_settings_json = "{\"port\": 35001}"
+
   lifecycle {
     ignore_changes = [users, groups]
   }
