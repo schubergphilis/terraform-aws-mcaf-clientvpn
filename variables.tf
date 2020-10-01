@@ -15,6 +15,12 @@ variable "dns_servers" {
   description = "A Client VPN endpoint can have up to two DNS servers"
 }
 
+variable "okta_groups" {
+  type        = list(string)
+  default     = []
+  description = "List of Okta group IDs to have the VPN assigned"
+}
+
 variable "okta_label" {
   type        = string
   default     = "Client VPN"
