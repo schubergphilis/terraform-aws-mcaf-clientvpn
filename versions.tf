@@ -5,7 +5,7 @@ terraform {
       version = ">= 3.5.0"
     }
     okta = {
-      source  = "terraform-providers/okta"
+      source  = "oktadeveloper/okta"
       version = ">= 3.5.0"
     }
   }
