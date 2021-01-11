@@ -20,4 +20,8 @@ resource "okta_app_group_assignment" "default" {
 
   app_id   = okta_app_saml.default.id
   group_id = each.key
+
+  lifecycle {
+    ignore_changes = ["priority"]
+  }
 }
