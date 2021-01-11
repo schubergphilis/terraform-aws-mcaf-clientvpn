@@ -22,6 +22,6 @@ resource "okta_app_group_assignment" "default" {
   group_id = each.key
 
   lifecycle {
-    ignore_changes = ["priority"]
+    ignore_changes = [priority]
   }
 }
