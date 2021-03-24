@@ -1,3 +1,8 @@
+locals {
+  federated_authentication   = "federated-authentication"
+  certificate_authentication = "certificate-authentication"
+}
+
 resource "aws_cloudwatch_log_group" "default" {
   name = "/aws/clientvpn"
   tags = var.tags
@@ -10,7 +15,7 @@ resource "aws_cloudwatch_log_stream" "default" {
 
 resource "aws_ec2_client_vpn_endpoint" "default" {
   client_cidr_block      = var.client_cidr_block
-  server_certificate_arn = aws_acm_certificate.default.arn
+  server_certificate_arn = try(aws_acm_certificate.self_signed[0].arn, aws_acm_certificate.default[0].arn)
   split_tunnel           = var.split_tunnel
   description            = var.stack
   dns_servers            = var.dns_servers
@@ -18,8 +23,9 @@ resource "aws_ec2_client_vpn_endpoint" "default" {
   transport_protocol     = var.transport_protocol
 
   authentication_options {
-    type              = "federated-authentication"
-    saml_provider_arn = aws_iam_saml_provider.default.arn
+    type                       = var.authentication_type
+    root_certificate_chain_arn = try(aws_acm_certificate.self_signed[0].arn, null)
+    saml_provider_arn          = try(aws_iam_saml_provider.default[0].arn, null)
   }
 
   connection_log_options {

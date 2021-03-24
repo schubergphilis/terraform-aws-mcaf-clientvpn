@@ -1,3 +1,13 @@
+variable "authentication_type" {
+  type        = string
+  description = "Type of authentication used"
+
+  validation {
+    condition     = anytrue([var.authentication_type == "certificate-authentication", var.authentication_type == "federated-authentication"])
+    error_message = "Must be either 'federated-authentication' or 'certificate-authentication'."
+  }
+}
+
 variable "client_cidr_block" {
   type        = string
   description = "The CIDR to use for the clients"
@@ -15,16 +25,22 @@ variable "dns_servers" {
   description = "A Client VPN endpoint can have up to two DNS servers"
 }
 
-variable "okta_groups" {
-  type        = list(string)
-  default     = []
-  description = "List of Okta group IDs to have the VPN assigned"
+variable "federated_authentication" {
+  type = object({
+    okta_groups = list(string)
+    okta_label  = string
+  })
+  default     = null
+  description = "Implements Federated Athentication using OKTA. Required when var.authentication_type is 'federated-authentication'"
 }
 
-variable "okta_label" {
-  type        = string
-  default     = "Client VPN"
-  description = "The label of the Okta App"
+variable "certificate_authentication" {
+  type = object({
+    organization    = string
+    private_key_pem = string
+  })
+  default     = null
+  description = "Implements Certificate (Mutual) Authentication using self-signed certificates. Required when var.authentication_type is 'certificate-authentication'"
 }
 
 variable "split_tunnel" {
@@ -63,4 +79,3 @@ variable "zone_id" {
   type        = string
   description = "ID of the Route53 zone in which to create the subdomain record"
 }
-
