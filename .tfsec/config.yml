@@ -1,0 +1,3 @@
+---
+exclude:
+  - AWS009 # An inline egress security group rule allows traffic to /0.
