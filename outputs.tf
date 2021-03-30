@@ -7,5 +7,7 @@ output "security_group_id" {
 }
 
 output "self_signed_cert_body_pem" {
-  value = var.authentication_type == local.certificate_authentication ? tls_self_signed_cert.default[0].cert_pem : null
+  value = var.authentication_type == local.certificate_authentication ? aws_acm_certificate.self_signed[0].certificate_body : null
 }
+
+
