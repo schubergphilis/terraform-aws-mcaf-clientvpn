@@ -4,7 +4,7 @@ locals {
 }
 
 resource "aws_cloudwatch_log_group" "default" {
-  name = "/aws/clientvpn"
+  name = "/aws/clientvpn/${var.stack}"
   tags = var.tags
 }
 
