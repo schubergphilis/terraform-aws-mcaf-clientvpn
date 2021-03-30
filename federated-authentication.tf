@@ -51,31 +51,3 @@ resource "aws_acm_certificate_validation" "default" {
   certificate_arn         = aws_acm_certificate.default[0].arn
   validation_record_fqdns = [aws_route53_record.certificate_validation[0].fqdn]
 }
-
-# For "certificate-authentication" generate a "self-signed" certificate
-resource "tls_self_signed_cert" "default" {
-  count = var.authentication_type == local.certificate_authentication ? 1 : 0
-
-  key_algorithm   = "RSA"
-  private_key_pem = var.certificate_authentication["private_key_pem"]
-
-  subject {
-    common_name  = local.dns_name
-    organization = var.certificate_authentication["organization"]
-  }
-
-  validity_period_hours = 8760 # 1 year
-
-  allowed_uses = [
-    "digital_signature",
-    "key_encipherment",
-    "server_auth",
-  ]
-}
-
-resource "aws_acm_certificate" "self_signed" {
-  count = var.authentication_type == local.certificate_authentication ? 1 : 0
-
-  private_key      = var.certificate_authentication["private_key_pem"]
-  certificate_body = tls_self_signed_cert.default[0].cert_pem
-}

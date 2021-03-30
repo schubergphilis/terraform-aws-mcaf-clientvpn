@@ -36,8 +36,7 @@ variable "federated_authentication" {
 
 variable "certificate_authentication" {
   type = object({
-    organization    = string
-    private_key_pem = string
+    organization         = string
   })
   default     = null
   description = "Implements Certificate (Mutual) Authentication using self-signed certificates. Required when var.authentication_type is 'certificate-authentication'"

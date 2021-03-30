@@ -15,7 +15,7 @@ resource "aws_cloudwatch_log_stream" "default" {
 
 resource "aws_ec2_client_vpn_endpoint" "default" {
   client_cidr_block      = var.client_cidr_block
-  server_certificate_arn = try(aws_acm_certificate.self_signed[0].arn, aws_acm_certificate.default[0].arn)
+  server_certificate_arn = try(aws_acm_certificate.server[0].arn, aws_acm_certificate.default[0].arn)
   split_tunnel           = var.split_tunnel
   description            = var.stack
   dns_servers            = var.dns_servers
@@ -24,7 +24,7 @@ resource "aws_ec2_client_vpn_endpoint" "default" {
 
   authentication_options {
     type                       = var.authentication_type
-    root_certificate_chain_arn = try(aws_acm_certificate.self_signed[0].arn, null)
+    root_certificate_chain_arn = try(aws_acm_certificate.root[0].arn, null)
     saml_provider_arn          = try(aws_iam_saml_provider.default[0].arn, null)
   }
 
