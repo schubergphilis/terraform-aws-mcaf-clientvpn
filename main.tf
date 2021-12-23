@@ -27,6 +27,8 @@ resource "aws_ec2_client_vpn_endpoint" "default" {
     cloudwatch_log_group  = aws_cloudwatch_log_group.default.name
     cloudwatch_log_stream = aws_cloudwatch_log_stream.default.name
   }
+
+  depends_on = [aws_acm_certificate_validation.default]
 }
 
 resource "aws_ec2_client_vpn_network_association" "default" {
