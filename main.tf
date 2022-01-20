@@ -32,10 +32,9 @@ resource "aws_ec2_client_vpn_endpoint" "default" {
 }
 
 resource "aws_ec2_client_vpn_network_association" "default" {
-  for_each = toset(var.subnet_ids)
-
+  count                  = length(var.subnet_ids)
   client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
-  subnet_id              = each.key
+  subnet_id              = var.subnet_ids[count.index]
   security_groups        = [aws_security_group.default.id]
 }
 
