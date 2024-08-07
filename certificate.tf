@@ -1,5 +1,5 @@
 locals {
-  dns_name = "${var.stack}.${data.aws_route53_zone.current.name}"
+  dns_name = "${var.name}.${data.aws_route53_zone.current.name}"
 }
 
 data "aws_route53_zone" "current" {
