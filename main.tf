@@ -1,22 +1,28 @@
+data "aws_subnet" "selected" {
+  id = var.subnet_ids[0]
+}
+
 resource "aws_cloudwatch_log_group" "default" {
-  name = "/aws/clientvpn"
+  name = var.log_group_name
   tags = var.tags
 }
 
 resource "aws_cloudwatch_log_stream" "default" {
   log_group_name = aws_cloudwatch_log_group.default.name
-  name           = var.stack
+  name           = var.name
 }
 
 resource "aws_ec2_client_vpn_endpoint" "default" {
   client_cidr_block      = var.client_cidr_block
-  server_certificate_arn = aws_acm_certificate.default.arn
-  split_tunnel           = var.split_tunnel
-  description            = var.stack
+  description            = var.name
   dns_servers            = var.dns_servers
   security_group_ids     = [aws_security_group.default.id]
-  tags                   = merge(var.tags, { "Name" = local.dns_name })
+  self_service_portal    = var.enable_self_service_portal ? "enabled" : "disabled"
+  server_certificate_arn = local.certificate_arn
+  split_tunnel           = var.split_tunnel
   transport_protocol     = var.transport_protocol
+  vpc_id                 = data.aws_subnet.selected.vpc_id
+  tags                   = merge(var.tags, { "Name" = var.name })
 
   authentication_options {
     type              = "federated-authentication"
@@ -33,15 +39,24 @@ resource "aws_ec2_client_vpn_endpoint" "default" {
 }
 
 resource "aws_ec2_client_vpn_network_association" "default" {
-  count                  = length(var.subnet_ids)
+  count = length(var.subnet_ids)
+
   client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
   subnet_id              = var.subnet_ids[count.index]
 }
 
+resource "aws_ec2_client_vpn_route" "default" {
+  count = length(var.subnet_ids)
+
+  client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
+  destination_cidr_block = "0.0.0.0/0"
+  target_vpc_subnet_id   = aws_ec2_client_vpn_network_association.default[count.index].subnet_id
+}
+
 resource "aws_security_group" "default" {
-  name        = "${var.stack}-sg"
-  description = "Security group for the Client VPN - ${var.stack}"
-  vpc_id      = var.vpc_id
+  name        = "${var.name}-sg"
+  description = "Security group for the Client VPN - ${var.name}"
+  vpc_id      = data.aws_subnet.selected.vpc_id
   tags        = var.tags
 
   egress {
