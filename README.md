@@ -65,6 +65,7 @@ No modules.
 | <a name="input_log_group_name"></a> [log\_group\_name](#input\_log\_group\_name) | The name of the CloudWatch log group to which the connection logs will be published | `string` | `"/aws/clientvpn"` | no |
 | <a name="input_name"></a> [name](#input\_name) | The name for the Client VPN | `string` | `"Client VPN"` | no |
 | <a name="input_name_in_okta_label"></a> [name\_in\_okta\_label](#input\_name\_in\_okta\_label) | Indicates whether to include the endpoint name in the Okta label | `bool` | `false` | no |
+| <a name="input_okta_app_authentication_policy"></a> [okta\_app\_authentication\_policy](#input\_okta\_app\_authentication\_policy) | The Id of the app sign on policy to be associated with the Okta app | `string` | `null` | no |
 | <a name="input_okta_group_ids"></a> [okta\_group\_ids](#input\_okta\_group\_ids) | List of Okta group IDs to have the VPN assigned | `list(string)` | `[]` | no |
 | <a name="input_okta_label"></a> [okta\_label](#input\_okta\_label) | The label applied to the Okta app and bookmark | `string` | `"AWS Client VPN"` | no |
 | <a name="input_server_certificate"></a> [server\_certificate](#input\_server\_certificate) | The domain name of the server certificate | `string` | `null` | no |
