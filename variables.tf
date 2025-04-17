@@ -61,6 +61,12 @@ variable "name_in_okta_label" {
   description = "Indicates whether to include the endpoint name in the Okta label"
 }
 
+variable "okta_app_authentication_policy" {
+  type        = string
+  default     = null
+  description = "The Id of the app sign on policy to be associated with the Okta app"
+}
+
 variable "okta_group_ids" {
   type        = list(string)
   default     = []
