@@ -5,7 +5,7 @@ resource "aws_iam_saml_provider" "default" {
 
 resource "okta_app_saml" "default" {
   app_settings_json     = "{\"port\": 35001}"
-  authentication_policy = var.okta_app_authentication_policy
+  authentication_policy = var.okta_app_authentication_policy_id
   hide_ios              = true
   hide_web              = true
   label                 = var.name_in_okta_label ? format("%s (%s)", var.okta_label, var.name) : var.okta_label
