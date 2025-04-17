@@ -1,21 +1,3 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 1.0"
-    }
-    okta = {
-      source  = "okta/okta"
-      version = ">= 1.0"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = ">= 1.0"
-    }
-  }
-  required_version = ">= 1.0"
-}
-
 data "aws_route53_zone" "current" {
   zone_id = "Z0123456789ABCDEFGHIJ"
 }
@@ -63,7 +45,7 @@ module "security_group" {
 }
 
 module "clientvpn" {
-  source = "github.com/schubergphilis/terraform-aws-mcaf-clientvpn?ref=v1"
+  source = "../.."
 
   name               = "MyClientVPN"
   client_cidr_block  = "172.16.0.0/16"
