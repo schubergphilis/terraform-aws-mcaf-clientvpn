@@ -1,6 +1,6 @@
 # terraform-aws-mcaf-clientvpn
 
-Terraform module to create a managed AWS Client VPN endpoint.
+Terraform module to create a managed AWS Client VPN endpoint and Okta app for authentication.
 
 > [!NOTE]
 > If creating more than one VPN endpoint, be sure to configure `var.cloudwatch_log_group_name`
