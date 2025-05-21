@@ -15,16 +15,18 @@ resource "aws_cloudwatch_log_stream" "default" {
 }
 
 resource "aws_ec2_client_vpn_endpoint" "default" {
-  client_cidr_block      = var.client_cidr_block
-  description            = var.name
-  dns_servers            = var.dns_servers
-  security_group_ids     = var.security_group_ids
-  self_service_portal    = var.enable_self_service_portal ? "enabled" : "disabled"
-  server_certificate_arn = local.certificate_arn
-  split_tunnel           = var.split_tunnel
-  transport_protocol     = var.transport_protocol
-  vpc_id                 = data.aws_subnet.selected.vpc_id
-  tags                   = merge(var.tags, { "Name" = var.name })
+  client_cidr_block             = var.client_cidr_block
+  description                   = var.name
+  disconnect_on_session_timeout = var.disconnect_on_session_timeout
+  dns_servers                   = var.dns_servers
+  security_group_ids            = var.security_group_ids
+  self_service_portal           = var.enable_self_service_portal ? "enabled" : "disabled"
+  server_certificate_arn        = local.certificate_arn
+  session_timeout_hours         = var.session_timeout_hours
+  split_tunnel                  = var.split_tunnel
+  transport_protocol            = var.transport_protocol
+  vpc_id                        = data.aws_subnet.selected.vpc_id
+  tags                          = merge(var.tags, { "Name" = var.name })
 
   authentication_options {
     type              = "federated-authentication"

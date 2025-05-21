@@ -21,6 +21,12 @@ variable "create_okta_bookmark" {
   description = "Indicates whether to create an Okta bookmark for the self-service portal"
 }
 
+variable "disconnect_on_session_timeout" {
+  type        = bool
+  default     = false
+  description = "Indicates whether the session is disconnected after the maximum session_timeout_hours is reached. If true, users are prompted to reconnect. If false, client VPN attempts to reconnect automatically"
+}
+
 variable "dns_servers" {
   type        = list(string)
   default     = null
@@ -88,6 +94,17 @@ variable "server_certificate" {
   type        = string
   default     = null
   description = "The domain name of the server certificate"
+}
+
+variable "session_timeout_hours" {
+  type        = number
+  default     = 24
+  description = "The maximum session timeout in hours"
+
+  validation {
+    condition     = contains([8, 10, 12, 24], var.session_timeout_hours)
+    error_message = "session_timeout_hours must be one of the following values: 8, 10, 12, or 24"
+  }
 }
 
 variable "split_tunnel" {
