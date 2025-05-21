@@ -60,6 +60,7 @@ No modules.
 | <a name="input_cloudwatch_retention_in_days"></a> [cloudwatch\_retention\_in\_days](#input\_cloudwatch\_retention\_in\_days) | The number of days to retain logs in CloudWatch | `string` | `"365"` | no |
 | <a name="input_connection_logging"></a> [connection\_logging](#input\_connection\_logging) | Indicates whether connection logging is enabled | `bool` | `true` | no |
 | <a name="input_create_okta_bookmark"></a> [create\_okta\_bookmark](#input\_create\_okta\_bookmark) | Indicates whether to create an Okta bookmark for the self-service portal | `bool` | `true` | no |
+| <a name="input_disconnect_on_session_timeout"></a> [disconnect\_on\_session\_timeout](#input\_disconnect\_on\_session\_timeout) | Indicates whether the session is disconnected after the maximum session\_timeout\_hours is reached. If true, users are prompted to reconnect. If false, client VPN attempts to reconnect automatically | `bool` | `false` | no |
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | DNS resolvers to configure (max 2) | `list(string)` | `null` | no |
 | <a name="input_enable_self_service_portal"></a> [enable\_self\_service\_portal](#input\_enable\_self\_service\_portal) | Specify whether to enable the self-service portal for the Client VPN endpoint | `bool` | `true` | no |
 | <a name="input_log_group_name"></a> [log\_group\_name](#input\_log\_group\_name) | The name of the CloudWatch log group to which the connection logs will be published | `string` | `"/aws/clientvpn"` | no |
@@ -69,6 +70,7 @@ No modules.
 | <a name="input_okta_group_ids"></a> [okta\_group\_ids](#input\_okta\_group\_ids) | List of Okta group IDs to have the VPN assigned | `list(string)` | `[]` | no |
 | <a name="input_okta_label"></a> [okta\_label](#input\_okta\_label) | The label applied to the Okta app and bookmark | `string` | `"AWS Client VPN"` | no |
 | <a name="input_server_certificate"></a> [server\_certificate](#input\_server\_certificate) | The domain name of the server certificate | `string` | `null` | no |
+| <a name="input_session_timeout_hours"></a> [session\_timeout\_hours](#input\_session\_timeout\_hours) | The maximum session timeout in hours | `number` | `24` | no |
 | <a name="input_split_tunnel"></a> [split\_tunnel](#input\_split\_tunnel) | Indicates whether split-tunnel is enabled on VPN endpoint | `bool` | `true` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | A mapping of tags to assign to the resources in this module | `map(string)` | `null` | no |
 | <a name="input_transport_protocol"></a> [transport\_protocol](#input\_transport\_protocol) | The transport protocol to be used by the VPN session | `string` | `"udp"` | no |
