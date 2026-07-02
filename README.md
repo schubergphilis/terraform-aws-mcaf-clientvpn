@@ -1,3 +1,9 @@
+<!-- migrate-repo:banner -->
+> [!IMPORTANT]
+> **This repository has moved to [`schubergphilis-ep/terraform-aws-mcaf-clientvpn`](https://github.com/schubergphilis-ep/terraform-aws-mcaf-clientvpn).**
+> Please update your references and use the new location for issues, PRs, and contributions.
+<!-- migrate-repo:banner -->
+
 # terraform-aws-mcaf-clientvpn
 
 Terraform module to create a managed AWS Client VPN endpoint and Okta app for authentication.
